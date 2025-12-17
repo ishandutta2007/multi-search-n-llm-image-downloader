@@ -2,10 +2,10 @@
 
 A powerful Python tool for downloading images from Bing, Google and more image search engines.
 
-[![GitHub top language](https://img.shields.io/github/languages/top/KTS-o7/better_bing_image_downloader)](https://github.com/KTS-o7/better_bing_image_downloader)
-[![GitHub](https://img.shields.io/github/license/KTS-o7/better-bing-image-downloader)](https://github.com/KTS-o7/better-bing-image-downloader/blob/main/LICENSE)
-[![PyPI version](https://badge.fury.io/py/better-bing-image-downloader.svg)](https://pypi.org/project/better-bing-image-downloader/)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKTS-o7%2Fbetter_bing_image_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![GitHub top language](https://img.shields.io/github/languages/top/ishandutta2007/multi_search_n_llm_image_downloader)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
+[![GitHub](https://img.shields.io/github/license/ishandutta2007/multi_search_n_llm_image_downloader)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/blob/main/LICENSE)
+[![PyPI version](https://badge.fury.io/py/multi_search_n_llm_image_downloader.svg)](https://pypi.org/project/multi_search_n_llm_image_downloader/)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fishandutta2007%2Fmulti_search_n_llm_image_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ## Features
 
@@ -35,14 +35,14 @@ A powerful Python tool for downloading images from Bing, Google and more image s
 ### Using pip
 
 ```bash
-pip install better-bing-image-downloader
+pip install multi-search-n-llm-image-downloader
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/KTS-o7/better_bing_image_downloader
-cd better_bing_image_downloader
+git clone https://github.com/ishandutta2007/multi_search_n_llm_image_downloader
+cd multi_search_n_llm_image_downloader
 python -m venv ./env
 source env/bin/activate  # On Windows: env\Scripts\activate
 pip install -r requirements.txt
@@ -54,7 +54,7 @@ pip install .
 ### Python API
 
 ```python
-from better_bing_image_downloader import downloader
+from multi_search_n_llm_image_downloader import downloader
 
 # Basic usage
 downloader("cute puppies", limit=50)
@@ -83,13 +83,13 @@ The package provides two command-line interfaces:
 #### 1. Simple CLI (Bing-only)
 
 ```bash
-python -m better_bing_image_downloader.download "query" [options]
+python -m multi_search_n_llm_image_downloader.download "query" [options]
 ```
 
 #### 2. Advanced CLI (Bing and Google)
 
 ```bash
-python -m better_bing_image_downloader.multidownloader "query" [options]
+python -m multi_search_n_llm_image_downloader.multidownloader "query" [options]
 ```
 
 ## Parameters
@@ -132,7 +132,7 @@ python -m better_bing_image_downloader.multidownloader "query" [options]
 ### Basic Search
 
 ```python
-from better_bing_image_downloader import downloader
+from multi_search_n_llm_image_downloader import downloader
 
 # Download 100 cat images to ./dataset/cats
 downloader("cats", limit=100)
@@ -156,10 +156,10 @@ downloader(
 
 ```bash
 # Download 50 landscape photographs using Google
-python -m better_bing_image_downloader.multidownloader "mountain landscape" --engine "Google" --max-number 50 --type "photograph"
+python -m multi_search_n_llm_image_downloader.multidownloader "mountain landscape" --engine "Google" --max-number 50 --type "photograph"
 
 # Download 100 cat images using Bing with Firefox headless
-python -m better_bing_image_downloader.multidownloader "cats" --engine "Bing" --driver "firefox_headless" --max-number 100
+python -m multi_search_n_llm_image_downloader.multidownloader "cats" --engine "Bing" --driver "firefox_headless" --max-number 100
 ```
 
 ## Disclaimer
@@ -192,4 +192,4 @@ If you have any questions or feedback, please contact the developer at [shenthar
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=KTS-o7/better-bing-image-downloader&type=Date)](https://www.star-history.com/#KTS-o7/better-bing-image-downloader&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=ishandutta2007/multi_search_n_llm_image_downloader&type=Date)](https://www.star-history.com/#ishandutta2007/multi_search_n_llm_image_downloader&Date)
