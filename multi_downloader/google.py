@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+
 from pathlib import Path
 import urllib.request
 import urllib
@@ -203,9 +203,7 @@ class Google:
                 if html == "":
                     logging.info("[%] No more images are available")
                     break
-                soup = BeautifulSoup(html)
-                tags = soup.findAll('img')
-                links = list(tag['src'] for tag in tags)
+                links = re.findall(r'"ou":"(.*?)"', html)
                 if self.verbose:
                     logging.info("[%%] Indexed %d Images on Page %d.", len(links), self.page_counter + 1)
                     logging.info("\n===============================================\n")
