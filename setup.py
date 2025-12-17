@@ -4,11 +4,11 @@ setup(
     name='multi-search-n-llm-image-downloader',
     version='0.1.0',
     author='Ishan',
-    author_email='ishantiw@gmail.com',
+    author_email='ishandutta2007@gmail.com',
     description='A package to download images from multiple search engines.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/ishan-tiw/multi_search_n_llm_image_downloader',
+    url='https://github.com/ishandutta2007/multi_search_n_llm_image_downloader',
     packages=find_packages(),
     install_requires=[
         'beautifulsoup4',
