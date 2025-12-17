@@ -1,3 +1,40 @@
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "multi-search-n-llm-image-downloader"
+version = "0.1.0"
+authors = [
+    { name="Ishan", email="ishandutta2007@gmail.com" },
+]
+description = "A package to download images from multiple search engines."
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "beautifulsoup4",
+    "filetype",
+    "requests",
+    "selenium",
+    "tqdm",
+    "lxml",
+    "chromedriver-autoinstaller",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ishandutta2007/multi-search-n-llm-image-downloader"
+
+[project.scripts]
+"multi-search-n-llm-image-downloader" = "multi_downloader.multidownloader:main"
