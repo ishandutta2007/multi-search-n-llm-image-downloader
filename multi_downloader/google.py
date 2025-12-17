@@ -187,10 +187,11 @@ class Google:
                     + '&sclient=img'
                     + '&udm=2'
                     # + '&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZ1Y6MJ25_tmWITc7uy4KIeqDdErwP5rACeJAty2zADJgYJpo1blvMpITBRgbnARM6y8KwxzRsF24u6g33NutBQod-bHaq-BaxULyF1bB2Uqyl-vUCNqEkT_YgKWrg4nlgIgtJDN8PYh5ozrABlRQ5aXJDZxAIbMOAM9soz4Ir11tZ76Bv-Q6kZAI729A6TsfHvehHyw'
+                    + '&tbs=isz:l'
                     + '&sa=X'
-                    + '&biw=1172'
-                    + '&bih=616'
-                    # + '&dpr=0.8'
+                    + '&biw=1990'
+                    + '&bih=980'
+                    + '&dpr=0.8'
                     # + '&first=' + str(self.page_counter)
                     # + '&count=' + str(self.limit)
                     # + '&adlt=' + self.adult
