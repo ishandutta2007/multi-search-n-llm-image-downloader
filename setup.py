@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='multi-downloader',
+    name='multi-search-n-llm-image-downloader',
     version='0.1.0',
     author='Ishan',
     author_email='ishantiw@gmail.com',
@@ -34,7 +34,7 @@ setup(
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
-            'multi-downloader=multidownloader:main',
+            'multi-search-n-llm-image-downloader=multidownloader:main',
         ],
     },
 )
