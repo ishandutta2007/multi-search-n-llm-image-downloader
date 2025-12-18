@@ -10,7 +10,7 @@ from tqdm import tqdm
 import filetype
 import pprint as pp
 
-ignore_domains = ("www.google.com", "support.google.com", "www.youtube.com", "https://en.wikipedia.org/wiki/Special:CentralAutoLogin/setCookies")
+ignore_domains = ("www.google.com", "support.google.com", "www.youtube.com", "https://en.wikipedia.org/wiki/Special:CentralAutoLogin/setCookies", "https://en.wikipedia.org/wiki/Special:CentralAutoLogin/start")
 ignore_exts = (".cms", ".svg", ".gif")
 
 '''
