@@ -121,6 +121,55 @@ class Google:
         else:
             return ""
 
+    def _find_largest_image_on_page(self, page_url):
+        try:
+            request = urllib.request.Request(page_url, None, self.headers)
+            response = urllib.request.urlopen(request, timeout=self.timeout)
+            html = response.read().decode('utf8')
+            soup = BeautifulSoup(html, 'html.parser')
+
+            largest_image_url = None
+            largest_area = 0
+
+            for img_tag in soup.find_all('img'):
+                img_src = img_tag.get('src')
+                if not img_src or not img_src.startswith('http') or img_src.startswith('data:'):
+                    continue
+
+                width = img_tag.get('width')
+                height = img_tag.get('height')
+
+                try:
+                    width = int(width) if width else 0
+                    height = int(height) if height else 0
+                except ValueError:
+                    width = 0
+                    height = 0
+
+                current_area = width * height
+
+                if current_area > largest_area:
+                    largest_area = current_area
+                    largest_image_url = img_src
+                elif largest_image_url is None and current_area == 0 and "large" in img_src.lower():
+                    largest_image_url = img_src
+                elif largest_image_url is None and current_area == 0 and "original" in img_src.lower():
+                    largest_image_url = img_src
+                elif largest_image_url is None and current_area == 0 and "full" in img_src.lower():
+                    largest_image_url = img_src
+
+            return largest_image_url
+
+        except urllib.error.HTTPError as e:
+            logging.error('HTTPError while fetching page %s: %s', page_url, e)
+            return None
+        except urllib.error.URLError as e:
+            logging.error('URLError while fetching page %s: %s', page_url, e)
+            return None
+        except Exception as e:
+            logging.error('Error finding largest image on page %s: %s', page_url, e)
+            return None
+
     def save_image(self, link, file_path) -> None:
         try:
             request = urllib.request.Request(link, None, self.headers)
@@ -198,40 +247,41 @@ class Google:
                     # + '&adlt=' + self.adult
                     # + '&qft=' + ('' if self.filter is None else self.get_filter(self.filter))
                 )
-                logging.debug("Request URL: %s", request_url) # Added debug log
                 request = urllib.request.Request(request_url, None, headers=self.headers)
                 response = urllib.request.urlopen(request)
                 html = response.read().decode('utf8')
-                logging.debug("HTML (first 500 chars): %s", html[:500]) # Added debug log
                 if html == "":
                     logging.info("[%] No more images are available")
                     break
                 soup = BeautifulSoup(html, 'html.parser')
-                tags = soup.findAll('img')
-                links = []
-                for tag in tags:
-                    src = tag.get('src')
-                    if src and src.startswith('http') and not src.startswith('data:'):
-                        links.append(src)
-                logging.debug("Found links: %s", links) # Added debug log
+                referrer_urls = []
+                for div_tag in soup.find_all('div', attrs={'data-lpage': True}):
+                    referrer_url = div_tag.get('data-lpage')
+                    if referrer_url:
+                        referrer_urls.append(referrer_url)
+                links = referrer_urls
                 if self.verbose:
-                    logging.info("[%%] Indexed %d Images on Page %d.", len(links), self.page_counter + 1)
+                    logging.info("[%%] Indexed %d Referrer URLs on Page %d.", len(referrer_urls), self.page_counter + 1)
                     logging.info("\n===============================================\n")
-                for link in links:
+                for referrer_url in referrer_urls:
 
                     isbadsite = False
                     for badsite in self.badsites:
-                        isbadsite = badsite in link
+                        isbadsite = badsite in referrer_url
                         if isbadsite:
                             if self.verbose:
-                                logging.info("[!] Link included in badsites %s %s", badsite, link)
+                                logging.info("[!] Link included in badsites %s %s", badsite, referrer_url)
                                 break
                     if isbadsite:
                         continue
 
-                    if self.download_count < self.limit and link not in self.seen:
-                        self.seen.add(link)
-                        self.download_image(link)
+                    if self.download_count < self.limit:
+                        image_url = self._find_largest_image_on_page(referrer_url)
+                        if image_url and image_url not in self.seen:
+                            self.seen.add(image_url)
+                            self.download_image(image_url)
+                        elif not image_url:
+                            logging.info("No suitable image found on page: %s", referrer_url)
 
                 self.page_counter += 1
             except urllib.error.HTTPError as e:
