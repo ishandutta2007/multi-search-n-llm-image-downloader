@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import cssutils
 
 import urllib.request
 import urllib
@@ -16,7 +17,18 @@ from colorama import Style
 import time
 
 colorama_init()
-
+accepted_image_formats = [
+    "jpe",
+    "jpeg",
+    "jfif",
+    "exif",
+    "tiff",
+    "gif",
+    "bmp",
+    "png",
+    "webp",
+    "jpg",
+]
 ignore_domains = (
     "www.google.com",
     "support.google.com",
@@ -155,15 +167,16 @@ class Google:
         else:
             return ""
 
-    def _find_largest_image_on_page(self, page_url):
+    def _find_all_images_on_page(self, page_url):
         try:
             request = urllib.request.Request(page_url, None, self.headers)
             response = urllib.request.urlopen(request, timeout=self.timeout)
             html = response.read().decode("utf8")
             soup = BeautifulSoup(html, "html.parser")
+            print(f"Searching on page:{page_url}")
 
-            largest_image_url = None
-            largest_area = 0
+            # largest_image_url = None
+            # largest_area = 0
             # Test for a given site
             # if "cafonline" in page_url:
             #     parsed_url = urlparse(page_url)
@@ -185,6 +198,7 @@ class Google:
             #             print(img_src)
             #         time.sleep(1000)
 
+            all_image_urls = []
             for img_tag in soup.find_all("img"):
                 img_src = img_tag.get("src")
                 if not img_src:
@@ -197,41 +211,60 @@ class Google:
                     continue
                 if (not img_src.startswith("http")) and (not img_src.startswith("www")):
                     continue
-                # print("img_src(ar2)=", img_src)
-                width = img_tag.get("width")
-                height = img_tag.get("height")
+                if not img_src.startswith("http"):
+                    img_src = "http://" + img_src
+                # width = img_tag.get("width")
+                # height = img_tag.get("height")
 
-                try:
-                    width = int(width) if width else 0
-                    height = int(height) if height else 0
-                except ValueError:
-                    width = 0
-                    height = 0
+                # try:
+                #     width = int(width) if width else 0
+                #     height = int(height) if height else 0
+                # except ValueError:
+                #     width = 0
+                #     height = 0
 
-                current_area = width * height
+                # current_area = width * height
+                # print(width, "*", height, "=", img_src)
+                # if width == 0 or height == 0:
+                #     if img_tag.get("style"):
+                #         style_str = img_tag["style"]
+                #         style = cssutils.parseStyle(style_str)
+                #         width = style["width"]
+                #         height = style["height"]
+                #         print(f"The inline style width is: {width} * {height}")
+                #     else:
+                #         print("No inline style found.")
 
-                if current_area > largest_area:
-                    largest_area = current_area
-                    largest_image_url = img_src
-                elif (
-                    largest_image_url is None
-                    and current_area == 0
-                    and "large" in img_src.lower()
-                ):
-                    largest_image_url = img_src
-                elif (
-                    largest_image_url is None
-                    and current_area == 0
-                    and "original" in img_src.lower()
-                ):
-                    largest_image_url = img_src
-                elif (
-                    largest_image_url is None
-                    and current_area == 0
-                    and "full" in img_src.lower()
-                ):
-                    largest_image_url = img_src
-            return largest_image_url
+                # if img_src in [
+                #     "www.cafonline.com/media/5mtfehem/afcon-2025-key-fact-web-egypt.png?rmode=max&width=500",
+                #     "www.cafonline.com/media/0ppdfisj/b24ifwm0032.jpg?width=1140",
+                # ]:
+                #     print(
+                #         f"{Fore.GREEN} {img_src} ---> {current_area} {Style.RESET_ALL}"
+                #     )
+                # if current_area > largest_area:
+                #     largest_area = current_area
+                #     largest_image_url = img_src
+                # elif (
+                #     largest_image_url is None
+                #     and current_area == 0
+                #     and "large" in img_src.lower()
+                # ):
+                #     largest_image_url = img_src
+                # elif (
+                #     largest_image_url is None
+                #     and current_area == 0
+                #     and "original" in img_src.lower()
+                # ):
+                #     largest_image_url = img_src
+                # elif (
+                #     largest_image_url is None
+                #     and current_area == 0
+                #     and "full" in img_src.lower()
+                # ):
+                #     largest_image_url = img_src
+                all_image_urls.append(img_src)
+            return all_image_urls
 
         except urllib.error.HTTPError as e:
             print(
@@ -279,25 +312,14 @@ class Google:
             )
             traceback.print_exc()
 
-    def download_image(self, link):
+    def download_image(self, link, image_subname):
         self.download_count += 1
         # Get the image link
         try:
             path = urllib.parse.urlsplit(link).path
             filename = posixpath.basename(path).split("?")[0]
             file_type = filename.split(".")[-1]
-            if file_type.lower() not in [
-                "jpe",
-                "jpeg",
-                "jfif",
-                "exif",
-                "tiff",
-                "gif",
-                "bmp",
-                "png",
-                "webp",
-                "jpg",
-            ]:
+            if file_type.lower() not in accepted_image_formats:
                 file_type = "jpg"
 
             if self.verbose:
@@ -310,7 +332,7 @@ class Google:
             self.save_image(
                 link,
                 self.output_dir.joinpath(
-                    f"{self.image_name}_{self.download_count}.{file_type}"
+                    f"{self.image_name}_{image_subname}_{self.download_count}.{file_type}"
                 ),
             )
             if self.verbose:
@@ -382,7 +404,7 @@ class Google:
                         referrer_url = referrer_url.strip()
                         if any(d in referrer_url for d in ignore_domains):
                             continue
-                        if any(referrer_url.endswith(e) for e in ignore_exts):
+                        if any(e in referrer_url for e in ignore_exts):
                             continue
                         if referrer_url in referrer_urls:
                             continue
@@ -422,34 +444,46 @@ class Google:
                             continue
 
                         if self.download_count < self.limit:
-                            image_url = self._find_largest_image_on_page(referrer_url)
-                            print(
-                                f"{Fore.BLUE} {referrer_url} ----> {image_url} {Style.RESET_ALL}"
-                            )
-                            if image_url is None:
+                            image_urls = self._find_all_images_on_page(referrer_url)
+                            # print(
+                            #     f"{Fore.BLUE} {referrer_url} ----> {image_url} {Style.RESET_ALL}"
+                            # )
+                            if len(image_urls) == 0:
                                 max_image_possible -= 1
                                 continue
-                            if any(d in image_url for d in ignore_domains):
-                                max_image_possible -= 1
-                                continue
-                            if image_url and any(
-                                image_url.endswith(e) for e in ignore_exts
-                            ):
-                                max_image_possible -= 1
-                                continue
-                            if image_url and image_url not in self.seen:
-                                self.seen.add(image_url)
-                                self.download_image(image_url)
-                                print(
-                                    f"\n[{self.query}][{ridx + 1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit} :{image_url}"
-                                )
-                            elif not image_url:
-                                logging.info(
-                                    "No suitable image found on page: %s", referrer_url
-                                )
-                                print(
-                                    f"\n[{self.query}][{ridx + 1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit}"
-                                )
+                            cleaned_image_urls = []
+                            for image_url in image_urls:
+                                if any(d in image_url for d in ignore_domains):
+                                    # max_image_possible -= 1
+                                    continue
+                                cleaned_image_urls.append(image_url)
+                            image_urls = cleaned_image_urls
+                            # pp.pprint(image_urls)
+                            cleaned_image_urls2 = []
+                            for image_url in image_urls:
+                                if image_url and any(
+                                    e in image_url for e in ignore_exts
+                                ):
+                                    # max_image_possible -= 1
+                                    continue
+                                cleaned_image_urls2.append(image_url)
+                            image_urls = cleaned_image_urls2
+                            pp.pprint(image_urls)
+                            for image_url in image_urls:
+                                if image_url and image_url not in self.seen:
+                                    self.seen.add(image_url)
+                                    self.download_image(image_url, ridx + 1)
+                                    print(
+                                        f"\n[{self.query}][{ridx + 1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit} :{image_url}"
+                                    )
+                                elif not image_url:
+                                    logging.info(
+                                        "No suitable image found on page: %s",
+                                        referrer_url,
+                                    )
+                                    print(
+                                        f"\n[{self.query}][{ridx + 1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit}"
+                                    )
                     except Exception as e:
                         print(
                             f"{Fore.RED} Error iterating largest image {e} {Style.RESET_ALL}"
