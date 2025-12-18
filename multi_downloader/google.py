@@ -383,6 +383,9 @@ class Google:
 
                         if self.download_count < self.limit:
                             image_url = self._find_largest_image_on_page(referrer_url)
+                            if image_url is None:
+                                max_image_possible -= 1
+                                continue
                             if any(d in image_url for d in ignore_domains):
                                 max_image_possible -= 1
                                 continue
@@ -391,6 +394,7 @@ class Google:
                             ):
                                 max_image_possible -= 1
                                 continue
+                            print(f"{Fore.BLUE} {image_url} {Style.RESET_ALL}")
                             if image_url and image_url not in self.seen:
                                 self.seen.add(image_url)
                                 self.download_image(image_url)
