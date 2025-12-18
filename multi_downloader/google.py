@@ -165,13 +165,13 @@ class Google:
             return largest_image_url
 
         except urllib.error.HTTPError as e:
-            logging.error('HTTPError while fetching page %s: %s', page_url, e)
+            print('HTTPError while fetching page %s: %s', page_url, e)
             return None
         except urllib.error.URLError as e:
-            logging.error('URLError while fetching page %s: %s', page_url, e)
+            print('URLError while fetching page %s: %s', page_url, e)
             return None
         except Exception as e:
-            logging.error('Error finding largest image on page %s: %s', page_url, e)
+            print('Error finding largest image on page %s: %s', page_url, e)
             return None
 
     def save_image(self, link, file_path) -> None:
@@ -180,18 +180,18 @@ class Google:
             image = urllib.request.urlopen(request, timeout=self.timeout).read()
             kind = filetype.guess(image)
             if kind is None or not kind.mime.startswith('image/'):
-                logging.error('Invalid image, not saving %s', link)
+                print('Invalid image, not saving %s', link)
                 raise ValueError('Invalid image, not saving %s' % link)
             with open(str(file_path), 'wb') as f:
                 f.write(image)
 
         except urllib.error.HTTPError as e:
             self.sources-=1
-            logging.error('HTTPError while saving image %s: %s', link, e)
+            print('HTTPError while saving image %s: %s', link, e)
 
         except urllib.error.URLError as e:
             self.sources-=1
-            logging.error('URLError while saving image %s: %s', link, e)
+            print('URLError while saving image %s: %s', link, e)
 
     def download_image(self, link):
         self.download_count += 1
@@ -217,7 +217,7 @@ class Google:
 
         except Exception as e:
             self.download_count -= 1
-            logging.error('Issue getting: %s\nError: %s', link, e)
+            print('Issue getting: %s\nError: %s', link, e)
 
     def run(self):
         while self.download_count < self.limit:
@@ -318,10 +318,10 @@ class Google:
 
                 self.page_counter += 1
             except urllib.error.HTTPError as e:
-                logging.error(' => HTTPError while making request to Google: %s', e)
+                print(' => HTTPError while making request to Google: %s', e)
                 if "429" in str(e):
                     raise e
             except urllib.error.URLError as e:
-                logging.error(' ==> URLError while making request to Google: %s', e)
+                print(' ==> URLError while making request to Google: %s', e)
 
         logging.info("\n\n[%%] Done. Downloaded %d images.", self.download_count)
