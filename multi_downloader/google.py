@@ -8,6 +8,7 @@ import re
 import logging
 from tqdm import tqdm
 import filetype
+import pprint as pp
 
 '''
 
@@ -255,8 +256,16 @@ class Google:
                     break
                 soup = BeautifulSoup(html, 'html.parser')
                 referrer_urls = []
-                for div_tag in soup.find_all('div', attrs={'data-lpage': True}):
-                    referrer_url = div_tag.get('data-lpage')
+                anchors = soup.find_all('a')
+                pp.pprint(anchors)
+                for aidx, anc in enumerate(anchors):
+                    urls = re.findall(r'(https?://\S+)', anc['href'])
+                    if len(urls) == 0:
+                        continue
+                    referrer_url = urls[0].split("&")[0] #anc['href']#anc.get('href')
+                    if "www.google.com" in referrer_url:
+                        continue
+                    # print(f"[{aidx+1}] ===>>> {referrer_url}")
                     if referrer_url:
                         referrer_urls.append(referrer_url)
                 links = referrer_urls
