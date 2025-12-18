@@ -208,15 +208,15 @@ class Google:
             return largest_image_url
 
         except urllib.error.HTTPError as e:
-            print("HTTPError while fetching page %s: %s", page_url, e)
+            print(f"{Fore.RED} HTTPError while fetching page {page_url} : {e}{Style.RESET_ALL}")
             traceback.print_stack()
             return None
         except urllib.error.URLError as e:
-            print("URLError while fetching page %s: %s", page_url, e)
+            print(f"{Fore.RED} URLError while fetching page {page_url} : {e}{Style.RESET_ALL}")
             traceback.print_stack()
             return None
         except Exception as e:
-            print(f"{Fore.RED} Error finding largest image on page %s: %s", page_url, e)
+            print(f"{Fore.RED} Error finding largest image on page {page_url} : {e}{Style.RESET_ALL}")
             traceback.print_stack()
             return None
 
@@ -226,19 +226,19 @@ class Google:
             image = urllib.request.urlopen(request, timeout=self.timeout).read()
             kind = filetype.guess(image)
             if kind is None or not kind.mime.startswith("image/"):
-                print("Invalid image, not saving %s", link)
-                raise ValueError("Invalid image, not saving %s" % link)
+                print(f"Invalid image, not saving {link}")
+                raise ValueError(f"{Fore.RED} Invalid image, not saving {link}{Style.RESET_ALL}")
             with open(str(file_path), "wb") as f:
                 f.write(image)
 
         except urllib.error.HTTPError as e:
             self.sources -= 1
-            print("HTTPError while saving image %s: %s", link, e)
+            print(f"{Fore.RED} HTTPError while saving image {link}: {e}{Style.RESET_ALL}")
             traceback.print_stack()
 
         except urllib.error.URLError as e:
             self.sources -= 1
-            print("URLError while saving image %s: %s", link, e)
+            print(f"{Fore.RED} URLError while saving image {link}: {e}{Style.RESET_ALL}")
             traceback.print_stack()
 
     def download_image(self, link):
@@ -272,9 +272,7 @@ class Google:
             self.save_image(
                 link,
                 self.output_dir.joinpath(
-                    "{}_{}.{}".format(
-                        self.image_name, str(self.download_count), file_type
-                    )
+                    f"{self.image_name}_{self.download_count}.{file_type}"
                 ),
             )
             if self.verbose:
@@ -286,7 +284,7 @@ class Google:
 
         except Exception as e:
             self.download_count -= 1
-            print(f"{Fore.RED} Issue getting: %s\nError: %s", link, e)
+            print(f"{Fore.RED} Issue getting: {link}\nError: {e}{Style.RESET_ALL}")
             traceback.print_stack()
 
     def run(self):
@@ -353,7 +351,7 @@ class Google:
                         print(f"[{self.query}][{aidx + 1}] ===>>> {referrer_url}")
                         referrer_urls.append(referrer_url)
                     except Exception as e:
-                        print(f"{Fore.RED} Error iterating anchors", e)
+                        print(f"{Fore.RED} Error iterating anchors: {e}{Style.RESET_ALL}")
                         traceback.print_stack()
                 links = referrer_urls
                 max_image_possible = len(links)
@@ -407,16 +405,16 @@ class Google:
                                     f"\n[{self.query}][{ridx + 1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit}"
                                 )
                     except Exception as e:
-                        print(f"{Fore.RED} Error iterating largest image", e)
+                        print(f"{Fore.RED} Error iterating largest image {e} {Style.RESET_ALL}")
                         traceback.print_stack()
 
                 self.page_counter += 1
             except urllib.error.HTTPError as e:
-                print(" => HTTPError while making request to Google: %s", e)
+                print(f"{Fore.RED} HTTPError while making request to Google: {e}{Style.RESET_ALL}")
                 traceback.print_stack()
                 if "429" in str(e):
                     raise e
             except urllib.error.URLError as e:
-                print(" ==> URLError while making request to Google: %s", e)
+                print(f"{Fore.RED} URLError while making request to Google: {e}{Style.RESET_ALL}")
 
         logging.info("\n\n[%%] Done. Downloaded %d images.", self.download_count)
