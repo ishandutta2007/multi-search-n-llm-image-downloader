@@ -303,9 +303,10 @@ class Google:
                         if image_url and image_url not in self.seen:
                             self.seen.add(image_url)
                             self.download_image(image_url)
+                            print(f"\n[{self.query}][{ridx+1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit} :{image_url}")
                         elif not image_url:
                             logging.info("No suitable image found on page: %s", referrer_url)
-                        print(f"\n[{self.query}][{ridx+1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit}")
+                            print(f"\n[{self.query}][{ridx+1}/{len(referrer_urls)}]Images {self.download_count}(downloaded) of {max_image_possible}(max possible), sent limit={self.limit}")
 
                 self.page_counter += 1
             except urllib.error.HTTPError as e:
