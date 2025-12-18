@@ -262,21 +262,24 @@ class Google:
                 anchors = soup.find_all('a')
                 # pp.pprint(anchors)
                 for aidx, anc in enumerate(anchors):
-                    urls = re.findall(r'(https?://\S+)', anc['href'])
-                    if len(urls) == 0:
-                        continue
-                    referrer_url = urls[0].split("&")[0] #anc['href']#anc.get('href')
-                    if not referrer_url:
-                        continue
-                    referrer_url = referrer_url.strip()
-                    if any(d in referrer_url for d in ignore_domains):
-                        continue
-                    if any(referrer_url.endswith(e) for e in ignore_exts):
-                        continue
-                    if referrer_url in referrer_urls:
-                        continue
-                    print(f"[{self.query}][{aidx+1}] ===>>> {referrer_url}")
-                    referrer_urls.append(referrer_url)
+                    try:
+                        urls = re.findall(r'(https?://\S+)', anc['href'])
+                        if len(urls) == 0:
+                            continue
+                        referrer_url = urls[0].split("&")[0] #anc['href']#anc.get('href')
+                        if referrer_url is None:
+                            continue
+                        referrer_url = referrer_url.strip()
+                        if any(d in referrer_url for d in ignore_domains):
+                            continue
+                        if any(referrer_url.endswith(e) for e in ignore_exts):
+                            continue
+                        if referrer_url in referrer_urls:
+                            continue
+                        print(f"[{self.query}][{aidx+1}] ===>>> {referrer_url}")
+                        referrer_urls.append(referrer_url)
+                    except Exception as e:
+                        print(e)
                 links = referrer_urls
                 max_image_possible = len(links)
                 print(f"[{self.query}]No of websites to be scraped = {max_image_possible}")
