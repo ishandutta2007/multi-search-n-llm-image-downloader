@@ -10,7 +10,7 @@ from tqdm import tqdm
 import filetype
 import pprint as pp
 
-ignore_domains = ("www.google.com", "support.google.com", "www.youtube.com")
+ignore_domains = ("www.google.com", "support.google.com", "www.youtube.com", "https://en.wikipedia.org/wiki/Special:CentralAutoLogin/setCookies")
 ignore_exts = (".cms", ".svg", ".gif")
 
 '''
@@ -297,6 +297,9 @@ class Google:
 
                     if self.download_count < self.limit:
                         image_url = self._find_largest_image_on_page(referrer_url)
+                        if any(d in image_url for d in ignore_domains):
+                            max_image_possible-=1
+                            continue
                         if image_url and any(image_url.endswith(e) for e in ignore_exts):
                             max_image_possible-=1
                             continue
