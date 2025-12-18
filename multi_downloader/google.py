@@ -12,6 +12,7 @@ import traceback
 from colorama import Fore
 from colorama import init as colorama_init
 from colorama import Style
+import time
 
 colorama_init()
 
@@ -19,6 +20,7 @@ ignore_domains = (
     "www.google.com",
     "support.google.com",
     "www.youtube.com",
+    "www.instagram.com",
     "https://en.wikipedia.org/wiki/Special:CentralAutoLogin/setCookies",
     "https://en.wikipedia.org/wiki/Special:CentralAutoLogin/start",
 )
@@ -161,6 +163,21 @@ class Google:
 
             largest_image_url = None
             largest_area = 0
+            # Test for a given site
+            # if "instagram" in page_url:
+            #     output_filename = "igsoup.html"
+            #     try:
+            #         with open(output_filename, "w", encoding="utf-8") as file:
+            #             file.write(str(soup))
+            #         print(f"Successfully wrote the soup to {output_filename}")
+            #     except IOError as e:
+            #         print(f"Error writing to file: {e}")
+
+            #     # pp.pprint(soup.find_all("img"))
+            #     for img_tag in soup.find_all("img"):
+            #         img_src = img_tag.get("src")
+            #         print(img_src)
+            #     time.sleep(1000)
 
             for img_tag in soup.find_all("img"):
                 img_src = img_tag.get("src")
