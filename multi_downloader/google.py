@@ -176,29 +176,6 @@ class Google:
             soup = BeautifulSoup(html, "html.parser")
             print(f"Searching on page:{page_url}")
 
-            # largest_image_url = None
-            # largest_area = 0
-            # Test for a given site
-            # if "cafonline" in page_url:
-            #     parsed_url = urlparse(page_url)
-            #     print(parsed_url)
-            #     print(parsed_url.netloc)
-            #     output_filename = "igsoup.html"
-            #     try:
-            #         with open(output_filename, "w", encoding="utf-8") as file:
-            #             file.write(str(soup))
-            #         print(f"Successfully wrote the soup of {page_url} to {output_filename}")
-            #     except IOError as e:
-            #         print(f"Error writing to file: {e}")
-
-            #     # pp.pprint(soup.find_all("img"))
-            #     for img_tag in soup.find_all("img"):
-            #         img_src = img_tag.get("src")
-            #         if img_src.startswith("/"):
-            #             img_src = parsed_url.netloc + img_src
-            #             print(img_src)
-            #         time.sleep(1000)
-
             all_image_urls = []
             for img_tag in soup.find_all("img"):
                 img_src = img_tag.get("src")
