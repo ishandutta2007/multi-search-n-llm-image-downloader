@@ -1,184 +1,197 @@
-# Multi Search & LLM Image Downloader
+# 🖼️ Multi Search & LLM Image Downloader
 
-A powerful Python tool for downloading images from Bing, Google and more image search engines.
-
-[![GitHub top language](https://img.shields.io/github/languages/top/ishandutta2007/multi_search_n_llm_image_downloader)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
-[![GitHub](https://img.shields.io/github/license/ishandutta2007/multi_search_n_llm_image_downloader)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/blob/main/LICENSE)
-[![PyPI version](https://badge.fury.io/py/multi_search_n_llm_image_downloader.svg)](https://pypi.org/project/multi_search_n_llm_image_downloader/)
+[![PyPI version](https://badge.fury.io/py/multi-search-n-llm-image-downloader.svg)](https://pypi.org/project/multi-search-n-llm-image-downloader/)
+[![Python versions](https://img.shields.io/pypi/pyversions/multi-search-n-llm-image-downloader.svg)](https://pypi.org/project/multi-search-n-llm-image-downloader/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/issues)
+[![Repo Size](https://img.shields.io/github/repo-size/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
+[![Last Commit](https://img.shields.io/github/last-commit/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fishandutta2007%2Fmulti_search_n_llm_image_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-## Features
+**Multi Search & LLM Image Downloader** is a powerful, high-performance Python tool designed for **bulk image scraping** from Bing, Google, and other search engines. It's the perfect solution for creating **large-scale datasets** for **Machine Learning**, **Deep Learning**, and **Computer Vision** projects.
 
-- Download images from Bing and Google search engines
-- Parallel downloading for significantly faster performance
-- Multiple filtering options (image type, color, adult content, etc.)
-- Support for both API and browser-based image retrieval
-- Command-line interface and Python API
-- Multiple browser support (Firefox, Chrome, headless options)
-- Proxy support
+---
 
-## Table of Contents
+## 🚀 Key Features
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Python API](#python-api)
-  - [Command Line Interface](#command-line-interface)
-- [Parameters](#parameters)
-- [Examples](#examples)
-- [License](#license)
-- [Disclaimer](#disclaimer)
-- [Changelog](#changelog)
-- [Contact](#contact)
+- 🔍 **Multi-Engine Support:** Download images from Bing and Google (and more to come!).
+- ⚡ **Lightning Fast:** Parallel downloading using multi-threading for maximum performance.
+- 🛠️ **Highly Customizable:** Filter by image type, color, size, and more.
+- 🤖 **LLM & AI Ready:** Ideal for gathering training data for AI models.
+- 💻 **Flexible Interface:** Use it as a Python library or via the Command Line Interface (CLI).
+- 🌐 **Robust Scraping:** Supports both API-based and browser-based (Selenium) retrieval.
+- 🕵️ **Stealthy & Safe:** Includes proxy support and headless browser options.
+- 📦 **Easy Integration:** Simple installation via pip.
 
-## Installation
+---
 
-### Using pip
+## 📚 Table of Contents
+
+- [📍 Quick Start](#-quick-start)
+- [⚙️ Installation](#️-installation)
+- [🖥️ Usage](#️-usage)
+  - [🐍 Python API](#-python-api)
+  - [📟 Command Line Interface](#-command-line-interface)
+- [🔧 Parameters](#-parameters)
+- [💡 Examples](#-examples)
+- [🤝 Contributing](#-contributing)
+- [⚖️ License](#️-license)
+- [⚠️ Disclaimer](#️-disclaimer)
+- [📝 Changelog](#-changelog)
+- [📧 Contact](#-contact)
+
+---
+
+## 📍 Quick Start
+
+```bash
+pip install multi-search-n-llm-image-downloader
+python -m multi_downloader.multidownloader "neon cityscapes" --engine "Google" --max-number 10
+```
+
+---
+
+## ⚙️ Installation
+
+### Using pip 📦
 
 ```bash
 pip install multi-search-n-llm-image-downloader
 ```
 
-### From source
+### From source 🛠️
 
 ```bash
 git clone https://github.com/ishandutta2007/multi_search_n_llm_image_downloader
 cd multi_search_n_llm_image_downloader
 python -m venv ./env
-source env/bin/activate  # On Windows: env\Scripts\activate
-pip install -r requirements.txt
-pip install .
+# On Windows: env\Scripts\activate | On Unix: source env/bin/activate
+pip install -e .
 ```
 
-## Usage
+---
 
-### Python API
+## 🖥️ Usage
+
+### 🐍 Python API
 
 ```python
-from multi_search_n_llm_image_downloader import downloader
+from multi_downloader import downloader
 
-# Basic usage
+# Basic usage: Download 50 puppy images
 downloader("cute puppies", limit=50)
 
-# Advanced usage
+# Advanced usage: Filtered download with parallel threads
 downloader(
-    query="cute puppies",
+    query="futuristic architecture",
     limit=100,
-    output_dir="my_images",
-    adult_filter_off=True,
-    force_replace=False,
-    timeout=60,
+    output_dir="dataset/architecture",
     filter="photo",  # Options: "line", "photo", "clipart", "gif", "transparent"
-    verbose=True,
-    badsites=["stock.adobe.com", "shutterstock.com"],
-    name="Puppy",
-    max_workers=8,  # Parallel downloads
+    max_workers=8,   # Parallel downloads
     engine="google"
 )
 ```
 
-### Command Line Interface
+### 📟 Command Line Interface
 
-The package provides two command-line interfaces:
+The package provides two CLI modes for flexibility:
 
-#### 1. Simple CLI (Bing-only)
-
+#### 1️⃣ Simple CLI (Bing-only)
 ```bash
-python -m multi_search_n_llm_image_downloader.download "query" [options]
+python -m multi_downloader.download "cyberpunk aesthetic" --limit 20
 ```
 
-#### 2. Advanced CLI (Bing and Google)
-
+#### 2️⃣ Advanced CLI (Bing & Google)
 ```bash
-python -m multi_search_n_llm_image_downloader.multidownloader "query" [options]
+python -m multi_downloader.multidownloader "vintage cars" --engine "Google" --max-number 50 --type "photograph"
 ```
 
-## Parameters
+---
+
+## 🔧 Parameters
 
 ### Python API Parameters
 
-| Parameter        | Type | Default    | Description                                                |
-| ---------------- | ---- | ---------- | ---------------------------------------------------------- |
-| query            | str  | (required) | Search term                                                |
-| limit            | int  | 100        | Maximum number of images to download                       |
-| output_dir       | str  | 'dataset'  | Directory to save images                                   |
-| adult_filter_off | bool | True       | Disable adult content filter                               |
-| force_replace    | bool | False      | Replace existing files and directories                     |
-| timeout          | int  | 60         | Connection timeout in seconds                              |
-| filter           | str  | ""         | Image type filter (line, photo, clipart, gif, transparent) |
-| verbose          | bool | True       | Display detailed output                                    |
-| badsites         | list | []         | List of sites to exclude from results                      |
-| name             | str  | 'Image'    | Base name for downloaded images                            |
-| max_workers      | int  | 4          | Number of parallel download threads                        |
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `query` | str | (req) | Search term |
+| `limit` | int | 100 | Max images to download |
+| `output_dir` | str | 'dataset' | Save directory |
+| `filter` | str | "" | Type (line, photo, clipart, gif, transparent) |
+| `max_workers` | int | 4 | Number of parallel threads |
+| `engine` | str | "bing" | Search engine to use |
 
-### Command Line Arguments (multidownloader.py)
+### CLI Arguments (`multidownloader.py`)
 
-| Argument       | Short | Default             | Description                                          |
-| -------------- | ----- | ------------------- | ---------------------------------------------------- |
-| --engine       | -e    | "Bing"              | Search engine ("Google" or "Bing")                   |
-| --driver       | -d    | "firefox_headless"  | Browser driver to use                                |
-| --max-number   | -n    | 100                 | Maximum number of images to download                 |
-| --num-threads  | -j    | 50                  | Number of concurrent download threads                |
-| --timeout      | -t    | 10                  | Download timeout in seconds                          |
-| --output       | -o    | "./download_images" | Output directory                                     |
-| --safe-mode    | -S    | False               | Enable safe search mode                              |
-| --face-only    | -F    | False               | Only search for faces                                |
-| --proxy_http   | -ph   | None                | HTTP proxy address (e.g., 192.168.0.2:8080)          |
-| --proxy_socks5 | -ps   | None                | SOCKS5 proxy address (e.g., 192.168.0.2:1080)        |
-| --type         | -ty   | None                | Image type filter (clipart, linedrawing, photograph) |
-| --color        | -cl   | None                | Color filter for images                              |
+| Argument | Short | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `--engine` | `-e` | "Bing" | "Google" or "Bing" |
+| `--driver` | `-d` | "firefox_headless" | Browser driver |
+| `--max-number` | `-n` | 100 | Max images |
+| `--num-threads` | `-j` | 50 | Concurrent threads |
+| `--output` | `-o` | "./download_images" | Output path |
+| `--type` | `-ty` | None | clipart, linedrawing, photograph |
 
-## Examples
+---
 
-### Basic Search
+## 💡 Examples
 
-```python
-from multi_search_n_llm_image_downloader import downloader
-
-# Download 100 cat images to ./dataset/cats
-downloader("cats", limit=100)
-```
-
-### Advanced Search with Filters
-
-```python
-# Download 50 transparent clipart images with parallel processing
-downloader(
-    query="logo design",
-    limit=50,
-    filter="transparent",
-    max_workers=8,
-    output_dir="logos",
-    engine="google"
-)
-```
-
-### Command Line Usage
-
+### 🖼️ Bulk Download for Dataset
 ```bash
-# Download 50 landscape photographs using Google
-python -m multi_search_n_llm_image_downloader.multidownloader "mountain landscape" --engine "Google" --max-number 50 --type "photograph"
-
-# Download 100 cat images using Bing with Firefox headless
-python -m multi_search_n_llm_image_downloader.multidownloader "cats" --engine "Bing" --driver "firefox_headless" --max-number 100
+python -m multi_downloader.multidownloader "forest landscapes" -e "Google" -n 200 -o "./datasets/forests"
 ```
 
-## Disclaimer
+### 🎨 Download Transparent Clipart
+```python
+downloader(query="star icon", limit=20, filter="transparent", engine="google")
+```
 
-This program lets you download images from search engines. Please do not download or use any image that violates its copyright terms. The developers of this tool are not responsible for any misuse.
+---
 
-## Changelog
+## 🤝 Contributing
 
-### 0.0.0
-- Currently shipped only Google and Bing
+Contributions are welcome! If you have a feature request, bug report, or want to improve the code, please open an issue or submit a pull request. 
 
-## License
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
 
-## Contact
+## ⚖️ License
 
-If you have any questions or feedback, please contact the developer at [ishandutta2007@gmail.com](mailto:ishandutta2007@gmail.com).
+Distributed under the **MIT License**. See `LICENSE` for more information.
 
-## Star History
+---
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ishandutta2007/multi_search_n_llm_image_downloader&type=Date)](https://www.star-history.com/#ishandutta2007/multi_search_n_llm_image_downloader&Date)
+## ⚠️ Disclaimer
+
+This tool is for educational and research purposes. Please respect the copyright of the images you download and the Terms of Service of the search engines. The developers are not responsible for any misuse.
+
+---
+
+## 📝 Changelog
+
+### 🚀 0.1.0
+- Refactored project structure.
+- Improved CLI performance.
+- Added support for more browser drivers.
+
+---
+
+## 📧 Contact
+
+**Ishan Dutta** - [ishandutta2007@gmail.com](mailto:ishandutta2007@gmail.com)
+
+Project Link: [https://github.com/ishandutta2007/multi_search_n_llm_image_downloader](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
+
+---
+
+<p align="center">
+  <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader">
+    <img src="https://api.star-history.com/svg?repos=ishandutta2007/multi_search_n_llm_image_downloader&type=Date" alt="Star History Chart">
+  </a>
+</p>
