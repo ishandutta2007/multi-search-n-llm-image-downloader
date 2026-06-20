@@ -1,15 +1,23 @@
 # 🖼️ Multi Search & LLM Image Downloader
 
-[![PyPI version](https://badge.fury.io/py/multi-search-n-llm-image-downloader.svg)](https://pypi.org/project/multi-search-n-llm-image-downloader/)
-[![Python versions](https://img.shields.io/pypi/pyversions/multi-search-n-llm-image-downloader.svg)](https://pypi.org/project/multi-search-n-llm-image-downloader/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/issues)
-[![Repo Size](https://img.shields.io/github/repo-size/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
-[![Last Commit](https://img.shields.io/github/last-commit/ishandutta2007/multi_search_n_llm_image_downloader.svg)](https://github.com/ishandutta2007/multi_search_n_llm_image_downloader)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fishandutta2007%2Fmulti_search_n_llm_image_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+<p align="center">
+  <img src="assets/banner.svg" alt="Multi Search & LLM Image Downloader - Bulk Image Scraping for AI" width="100%">
+</p>
 
-**Multi Search & LLM Image Downloader** is a powerful, high-performance Python tool designed for **bulk image scraping** from Bing, Google, and other search engines. It's the perfect solution for creating **large-scale datasets** for **Machine Learning**, **Deep Learning**, and **Computer Vision** projects.
+<p align="center">
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a>
+  <a href="https://pypi.org/project/multi-search-n-llm-image-downloader/"><img src="https://badge.fury.io/py/multi-search-n-llm-image-downloader.svg" alt="PyPI version"/></a>
+  <a href="https://pypi.org/project/multi-search-n-llm-image-downloader/"><img src="https://img.shields.io/pypi/pyversions/multi-search-n-llm-image-downloader.svg" alt="Python versions"/></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"/></a>
+  <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="GitHub stars"/></a>
+  <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/issues"><img src="https://img.shields.io/github/issues/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="GitHub issues"/></a>
+  <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader"><img src="https://img.shields.io/github/repo-size/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="Repo Size"/></a>
+  <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader"><img src="https://img.shields.io/github/last-commit/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="Last Commit"/></a>
+  <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fishandutta2007%2Fmulti_search_n_llm_image_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" alt="Hits"/></a>
+  <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
+</p>
+
+🚀 **Multi Search & LLM Image Downloader** is a powerful, high-performance Python tool designed for **bulk image scraping** from Bing, Google, and other search engines. It's the ultimate solution for building **large-scale datasets** for **Machine Learning**, **Deep Learning**, **Computer Vision**, and **Generative AI (LLM)** projects. Whether you need an **image dataset downloader** or an automated **web scraping bot**, this library offers speed and flexibility.
 
 ---
 
