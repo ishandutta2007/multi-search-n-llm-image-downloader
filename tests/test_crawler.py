@@ -30,7 +30,6 @@ class TestCrawler(unittest.TestCase):
         mock_elem.get_attribute.return_value = '<div class="islib"><a href="imgurl=http://example.com/img.jpg&amp;imgrefurl=..."></a></div>'
         mock_driver.find_elements.side_effect = [
             [mock_elem] * 5, # thumb_elements (google_image_url_from_webpage)
-            [], # show_more (google_image_url_from_webpage loop)
             [mock_elem] * 5  # image_elements (google_image_url_from_webpage)
         ]
         

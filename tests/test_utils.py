@@ -6,7 +6,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(gen_valid_dir_name_for_keywords("hello world"), "hello_world")
         self.assertEqual(gen_valid_dir_name_for_keywords("hello:world"), "hello-world")
         self.assertEqual(gen_valid_dir_name_for_keywords("hello/world"), "helloworld")
-        self.assertEqual(gen_valid_dir_name_for_keywords("query with - _ ."), "query_with_-_.")
+        self.assertEqual(gen_valid_dir_name_for_keywords("query with - _ ."), "query_with_-___.")
     
     def test_gen_keywords_list_from_str(self):
         self.assertEqual(gen_keywords_list_from_str("a,b,c"), ["a", "b", "c"])

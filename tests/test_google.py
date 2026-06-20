@@ -41,9 +41,12 @@ class TestGoogle(unittest.TestCase):
         mock_response.read.return_value = b'<html><body><img src="http://example.com/1.jpg"><img src="/2.jpg"></body></html>'
         mock_urlopen.return_value = mock_response
         
+        import multi_downloader
+        print("MODULE LOADED FROM:", multi_downloader.__file__)
         images = self.google._find_all_images_on_page("http://example.com")
+        print("MOCK RETURNED IMAGES:", images)
         self.assertIn("http://example.com/1.jpg", images)
-        self.assertIn("example.com/2.jpg", images)
+        self.assertIn("http://example.com/2.jpg", images)
 
     @patch('multi_downloader.google.Google.save_image')
     def test_download_image(self, mock_save):
@@ -58,6 +61,11 @@ class TestGoogle(unittest.TestCase):
         mock_response = MagicMock()
         mock_response.read.return_value = b'<html><body><img src="http://example.com/thumb.jpg"><a href="http://example.com/page1"></a></body></html>'
         mock_urlopen.return_value = mock_response
+        
+        def mock_download_func(*args, **kwargs):
+            self.google.download_count += 1
+            
+        mock_download.side_effect = mock_download_func
         
         # Mock _find_all_images_on_page to return a list
         with patch.object(Google, '_find_all_images_on_page', return_value=["http://example.com/full.jpg"]):

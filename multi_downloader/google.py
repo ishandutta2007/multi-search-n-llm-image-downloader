@@ -183,7 +183,8 @@ class Google:
                     continue
                 # print("img_src(b4)=", img_src)
                 if img_src.startswith("/"):
-                    img_src = urlparse(page_url).netloc + img_src
+                    img_src = urlparse(page_url).scheme + "://" + urlparse(page_url).netloc + img_src
+                print("DEBUG: img_src after / resolution:", img_src)
                 # print("img_src(ar1)=", img_src)
                 if img_src.startswith("data:"):
                     continue

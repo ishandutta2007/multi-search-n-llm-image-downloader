@@ -60,10 +60,11 @@ class TestHelperDownload(unittest.TestCase):
             
         self.assertEqual(mock_get.call_count, 3)
 
+    @patch('multi_downloader.helperdownload.concurrent.futures.wait')
     @patch('multi_downloader.helperdownload.concurrent.futures.ThreadPoolExecutor')
     @patch('multi_downloader.helperdownload.os.path.exists')
     @patch('multi_downloader.helperdownload.os.makedirs')
-    def test_download_images_concurrency(self, mock_makedirs, mock_exists, mock_executor):
+    def test_download_images_concurrency(self, mock_makedirs, mock_exists, mock_executor, mock_wait):
         mock_exists.return_value = False
         
         image_urls = ["url1", "url2", "url3"]

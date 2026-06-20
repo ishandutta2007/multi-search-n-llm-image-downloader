@@ -156,6 +156,24 @@ downloader(query="star icon", limit=20, filter="transparent", engine="google")
 
 ---
 
+## 🧪 Running Tests
+
+To ensure the package and its features work as expected, you can run the provided test suite using `pytest`.
+
+1. **Install Test Dependencies** (if not already installed):
+```bash
+pip install pytest
+```
+
+2. **Run Tests**:
+Execute the tests from the root of the project directory:
+```bash
+pytest tests/
+```
+The test suite heavily utilizes mocking to ensure tests run fast and without requiring internet or browser dependencies.
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! If you have a feature request, bug report, or want to improve the code, please open an issue or submit a pull request. 

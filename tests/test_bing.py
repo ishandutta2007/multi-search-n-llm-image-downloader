@@ -60,6 +60,12 @@ class TestBing(unittest.TestCase):
         # We only want to run one loop for testing
         # We can control this by setting limit and download_count
         self.bing.limit = 1
+        
+        def mock_download_func(*args, **kwargs):
+            self.bing.download_count += 1
+            
+        mock_download.side_effect = mock_download_func
+        
         self.bing.run()
         
         mock_download.assert_called_with("http://example.com/img1.jpg")
