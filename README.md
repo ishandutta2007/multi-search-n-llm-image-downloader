@@ -13,7 +13,6 @@
   <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader/issues"><img src="https://img.shields.io/github/issues/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="GitHub issues"/></a>
   <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader"><img src="https://img.shields.io/github/repo-size/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="Repo Size"/></a>
   <a href="https://github.com/ishandutta2007/multi_search_n_llm_image_downloader"><img src="https://img.shields.io/github/last-commit/ishandutta2007/multi_search_n_llm_image_downloader.svg" alt="Last Commit"/></a>
-  <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fishandutta2007%2Fmulti_search_n_llm_image_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" alt="Hits"/></a>
   <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
 </p>
 
